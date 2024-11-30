@@ -2,11 +2,17 @@
   display: flex;
   margin: 1rem;
   max-height: 80vh;
+  margin-bottom: 5rem;
+  overflow-y: auto;
+  flex-direction: column;
 }
 
 .products {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
+  margin: auto;
+  max-width: 1450px;
+  column-gap: 1rem;
   row-gap: 3rem;
 }
