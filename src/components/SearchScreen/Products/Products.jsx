@@ -8,6 +8,7 @@ import Cart from "../Cart/Cart";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useForm } from "../../../redux/useForm";
 import * as styles from "./styles.module.scss";
+import Spinner from "../../../shared/Spinner/Spinner";
 
 export default function Products() {
   const { response, getProducts, loading } = useGetAccountStatements();
@@ -79,9 +80,7 @@ export default function Products() {
       </div>
 
       {loading && (
-        <div className={styles.loading}>
-          <CircularProgress />
-        </div>
+        <Spinner />
       )}
 
       <button onClick={() => onChangePage({ page: pagination.page + 1 })}>

@@ -11,8 +11,6 @@ React Version 18.3.1
 Node js v20.4.0
 
 
-1.- Install Dependencies
-npm install
+1.- Install Dependencies: npm install
 
-2.- Launch Project
-npm run dev
+2.- Launch Project: npm run dev
