@@ -9,11 +9,8 @@
 .logo {
   display: flex;
   align-items: center;
-  .img {
+  & .img {
     display: flex;
     width: 150px;
-  }
-
-  .name {
   }
 }

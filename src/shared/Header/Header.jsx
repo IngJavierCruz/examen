@@ -8,7 +8,9 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.logo}>
         <img src={Logo} alt="Logo Img" className={styles.img} />
-        <Typography color="textSecondary" className={styles.name} variant="h4">e-Commerce Gapsi</Typography>
+        <Typography color="textSecondary" className={styles.name} variant="h4">
+          e-Commerce Gapsi
+        </Typography>
       </div>
 
       <IconButton aria-label="Menu" color="primary">
