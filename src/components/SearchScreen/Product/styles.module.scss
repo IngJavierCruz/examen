@@ -10,3 +10,9 @@
   border-top: 2px solid rgba(200, 200, 200, 0.905);
   padding-top: 0.5rem;
 }
+
+.card:hover, .card:active {
+  cursor: grab;
+  opacity: 0.6;
+  box-shadow: 3;
+}
