@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { useGetAccountStatements } from "../../../services/product/getProducts";
 import Product from "../Product/Product";
-import CircularProgress from "@mui/material/CircularProgress";
 import { Button, IconButton, TextField, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Cart from "../Cart/Cart";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useForm } from "../../../redux/useForm";
-import * as styles from "./styles.module.scss";
 import Spinner from "../../../shared/Spinner/Spinner";
+import * as styles from "./styles.module.scss";
 
 export default function Products() {
   const { response, getProducts, loading } = useGetAccountStatements();
   const [values, handleInputChange, reset] = useForm({ search: "" });
   const [products, setProducts] = useState([]);
   const [productsCart, setProductsCart] = useState([]);
+  const hasMore = true; // LIGAR CON MAXIMO NUMERO DE PAGINAS
 
   const { data, pagination } = response;
 
@@ -42,6 +42,13 @@ export default function Products() {
     setProducts([]);
     setProductsCart([]);
     reset();
+  };
+
+  const handleScroll = (event) => {
+    const { scrollTop, scrollHeight, clientHeight } = event.target;
+    if (scrollTop + clientHeight >= scrollHeight - 5 && hasMore && !loading) {
+      onChangePage({ page: pagination.page + 1 })
+    }
   };
 
   useEffect(() => {
@@ -73,7 +80,7 @@ export default function Products() {
         </div>
       </header>
 
-      <div className={styles.products}>
+      <div className={styles.products} onScroll={handleScroll}>
         {products.map((x, index) => (
           <Product key={index} data={x} handleDragStart={handleDragStart} />
         ))}
@@ -82,10 +89,6 @@ export default function Products() {
       {loading && (
         <Spinner />
       )}
-
-      <button onClick={() => onChangePage({ page: pagination.page + 1 })}>
-        Más
-      </button>
     </div>
   );
 }

@@ -1,0 +1,28 @@
+// Sizes of screen
+$app-grid-breakpoints: (
+  xs: 320px,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+  xxll: 1800px,
+);
+
+
+// EXAMPLE media-between(xs, lg)
+// @media (min-width: 320px) and (max-width: 992px) { ... }
+@mixin media-between($media-start: xs, $media-end: xxll) {
+  $max-width: map-get($app-grid-breakpoints, $media-end);
+  @media (min-width: map-get($app-grid-breakpoints, $media-start)) and (max-width: calc($max-width - 0.02px)) {
+    @content;
+  }
+}
+
+// EXAMPLE media-from(md)
+// @media (min-width: 768px) { ... }
+@mixin media-from($media) {
+  @media(min-width: map-get($app-grid-breakpoints, $media)) {
+    @content;
+  }
+}

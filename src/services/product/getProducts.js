@@ -23,9 +23,7 @@ export const useGetAccountStatements = () => {
     getProductsPromise(payload)
       .then(({data}) => {
         const result = data.item?.props?.pageProps?.initialData?.searchResult?.itemStacks[0]?.items || []
-        console.log("response", response);
         const products = result.filter(x => x.canAddToCart && x.availabilityStatusDisplayValue === "In stock");
-        console.log("products", products);
         setResponse({data: products, pagination: payload});
       })
       .catch((err) => {
