@@ -1,12 +1,19 @@
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   background-color: #f2f2f2;
   padding: 1rem 2rem;
 }
 
 .logo {
   display: flex;
-  width: 150px;
+  align-items: center;
+  .img {
+    display: flex;
+    width: 150px;
+  }
+
+  .name {
+  }
 }
