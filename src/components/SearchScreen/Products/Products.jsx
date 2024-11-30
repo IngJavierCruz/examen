@@ -2,17 +2,18 @@ import { useEffect, useState } from "react";
 import { useGetAccountStatements } from "../../../services/product/getProducts";
 import Product from "../Product/Product";
 import CircularProgress from "@mui/material/CircularProgress";
-import { IconButton, TextField, Typography } from "@mui/material";
+import { Button, IconButton, TextField, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import * as styles from "./styles.module.scss";
 import Cart from "../Cart/Cart";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useForm } from "../../../redux/useForm";
+import * as styles from "./styles.module.scss";
 
 export default function Products() {
   const { response, getProducts, loading } = useGetAccountStatements();
-  const [values, handleInputChange] = useForm({ search: "" });
+  const [values, handleInputChange, reset] = useForm({ search: "" });
   const [products, setProducts] = useState([]);
-  const [productsAdded, setProductsAdded] = useState([]);
+  const [productsCart, setProductsCart] = useState([]);
 
   const { data, pagination } = response;
 
@@ -26,18 +27,24 @@ export default function Products() {
   };
 
   const finishAddProduct = (product) => {
-    const newProducts = products.filter(x => x.id !== product.id);
+    const newProducts = products.filter((x) => x.id !== product.id);
     setProducts(newProducts);
-    setProductsAdded(x => [...x, product.id]);
-  }
+    setProductsCart(x => [...x, product.id]);
+  };
 
   const initSearch = () => {
     setProducts([]);
     getProducts({ query: values.search, page: 1 });
   };
 
+  const resetTest = () => {
+    setProducts([]);
+    setProductsCart([]);
+    reset();
+  };
+
   useEffect(() => {
-    const uniquesProducts = data.filter(x => !productsAdded.includes(x.id));
+    const uniquesProducts = data.filter((x) => !productsCart.includes(x.id));
     setProducts((x) => [...x, ...uniquesProducts]);
   }, [response]);
 
@@ -45,7 +52,7 @@ export default function Products() {
     <div className={styles.wrapper}>
       <header className={styles.header}>
         <Typography>Total de registros {products.length}</Typography>
-        <Cart finishAddProduct={finishAddProduct} />
+        <Cart finishAddProduct={finishAddProduct} productsCart={productsCart} />
 
         <div className={styles.search}>
           <TextField
@@ -58,6 +65,10 @@ export default function Products() {
           <IconButton onClick={() => initSearch()}>
             <SearchIcon />
           </IconButton>
+
+          <Button variant="outlined" size="small" startIcon={<RestartAltIcon />} onClick={() => resetTest()}>
+            Reiniciar prueba
+          </Button>
         </div>
       </header>
 
