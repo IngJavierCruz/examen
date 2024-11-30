@@ -6,6 +6,12 @@
   row-gap: 0.75rem;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 .products {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -21,3 +27,8 @@
 }
 
 
+
+.search {
+  display: flex;
+  align-items: center;
+}
