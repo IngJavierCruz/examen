@@ -7,6 +7,7 @@ import Cart from "../Cart/Cart";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useForm } from "../../../redux/useForm";
 import Spinner from "../../../shared/Spinner/Spinner";
+import Snackbar from "@mui/material/Snackbar";
 import * as styles from "./styles.module.scss";
 
 export default function Products() {
@@ -15,6 +16,7 @@ export default function Products() {
   const [products, setProducts] = useState([]);
   const [productsCart, setProductsCart] = useState([]);
   const hasMore = true; // LIGAR CON MAXIMO NUMERO DE PAGINAS
+  const [showMessage, setShowMessage] = useState(false);
 
   const { data, pagination } = response;
 
@@ -30,7 +32,8 @@ export default function Products() {
   const finishAddProduct = (product) => {
     const newProducts = products.filter((x) => x.id !== product.id);
     setProducts(newProducts);
-    setProductsCart(x => [...x, product.id]);
+    setProductsCart((x) => [...x, product.id]);
+    setShowMessage(true);
   };
 
   const initSearch = () => {
@@ -47,7 +50,7 @@ export default function Products() {
   const handleScroll = (event) => {
     const { scrollTop, scrollHeight, clientHeight } = event.target;
     if (scrollTop + clientHeight >= scrollHeight - 5 && hasMore && !loading) {
-      onChangePage({ page: pagination.page + 1 })
+      onChangePage({ page: pagination.page + 1 });
     }
   };
 
@@ -74,7 +77,12 @@ export default function Products() {
             <SearchIcon />
           </IconButton>
 
-          <Button variant="outlined" size="small" startIcon={<RestartAltIcon />} onClick={() => resetTest()}>
+          <Button
+            variant="outlined"
+            size="small"
+            startIcon={<RestartAltIcon />}
+            onClick={() => resetTest()}
+          >
             Reiniciar prueba
           </Button>
         </div>
@@ -86,9 +94,15 @@ export default function Products() {
         ))}
       </div>
 
-      {loading && (
-        <Spinner />
-      )}
+      {loading && <Spinner />}
+
+      <Snackbar
+        open={showMessage}
+        autoHideDuration={6000}
+        onClose={() => setShowMessage(false)}
+        message="Producto agregado"
+        anchorOrigin={{horizontal: "center", vertical: "top"}}
+      />
     </div>
   );
 }
