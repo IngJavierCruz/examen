@@ -1,0 +1,12 @@
+.wrapper {
+  display: flex;
+  margin: 1rem;
+  max-height: 80vh;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  row-gap: 3rem;
+}
